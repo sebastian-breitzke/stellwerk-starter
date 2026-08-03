@@ -69,6 +69,55 @@ In that mode the agent should:
 
 That is the heart of Stellwerk Starter. Everything else supports it.
 
+### How a session runs
+
+The phases are a state machine, not a waterfall — the agent moves back and
+sideways when the conversation demands it. Every phase writes into the session
+store.
+
+```mermaid
+flowchart LR
+    A[Intake<br/>raw input preserved] --> B[Challenge<br/>one hard question]
+    B --> C[Plan<br/>scope + verification]
+    C --> D[Delegate<br/>bounded subagents]
+    D --> E[Verify<br/>evidence, not claims]
+    E --> F[Close<br/>or explicitly narrow]
+    E -. gaps found .-> C
+
+    subgraph store[Session store]
+        L[session.jsonl<br/>append-only audit trail]
+        S[state.md<br/>compact current state]
+    end
+
+    A -.-> L
+    D -.-> L
+    E -.-> S
+```
+
+The two artifacts have different jobs. The JSONL log is the audit trail —
+append-only, with the user's original input stored verbatim before any
+summarizing happens. The state file is working memory: the compact current
+state a fresh chat, a resumed session, or a worker agent reads first instead
+of replaying the whole conversation. That split is what makes a session
+survive context compaction.
+
+### Who coordinates whom
+
+```mermaid
+flowchart TD
+    U[User<br/>direction + corrections] --> M[Main agent<br/>owns the session]
+    M --> S1[Subagent<br/>bounded scope]
+    M --> S2[Subagent<br/>bounded scope]
+    S1 -- compact result --> M
+    S2 -- compact result --> M
+    M -- reviewed + verified outcome --> U
+```
+
+Subagents produce inputs. They never own the goal, never lower the quality
+bar, and never replace final review. The rule that makes the model work:
+the agent never hands coordination back to the user for work that belongs
+inside the session.
+
 ## File Map
 
 Start here:
@@ -98,7 +147,7 @@ Core skill blueprints:
 Optional skill blueprints:
 
 - [skills/prompt-design.md](skills/prompt-design.md): prompt and instruction quality
-- [skills/doc-writing.md](skills/doc-writing.md): readable documentation
+- [skills/functional-writing.md](skills/functional-writing.md): durable technical and decision-oriented text
 - [skills/person-context.md](skills/person-context.md): durable communication context
 
 ## What Not To Adapt

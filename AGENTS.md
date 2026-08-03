@@ -55,7 +55,7 @@ When the user has no strong preference, recommend this order:
 4. `verification`: proof before done
 5. one optional workflow: `research` or `meeting-recap`
 
-Only add `prompt-design`, `doc-writing`, or `person-context` when the user needs
+Only add `prompt-design`, `functional-writing`, or `person-context` when the user needs
 those workflows now.
 
 ## Adaptation Rules

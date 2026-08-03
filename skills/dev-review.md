@@ -31,7 +31,7 @@ Use one of:
 ```text
 Decision
 
-Main Concerns
+Findings
 
 Recommended Changes
 

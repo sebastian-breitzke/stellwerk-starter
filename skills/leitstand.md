@@ -37,6 +37,24 @@ Use this workflow for:
 
 Do not use it for trivial commands or narrow one-shot fixes.
 
+## Direct Modes
+
+Mid-session duties drift. Expose small named modes so the user can re-focus one
+duty without restarting intake:
+
+| Mode | Job of the turn |
+|------|-----------------|
+| `goal` | regenerate the one copy-paste goal from current session state |
+| `handover` | produce a self-contained brief for a new chat or parallel agent |
+| `orchestrate` | force the delegation checkpoint and spawn subagents |
+| `state` | refresh the compact current-state file |
+| `log` | audit the session log and backfill missing events |
+| `run` | pull the next runnable slice from state, execute, verify, repeat until blocked or empty |
+| `resume` | re-enter an existing session from its decision state |
+
+When the user invokes a mode explicitly, that mode is the entire job of the
+turn. Do not fold it into other pending work and do not restart intake.
+
 ## Session Store
 
 If the user's repo supports local task logs, create:
@@ -59,6 +77,7 @@ Use one JSON object per line when logging:
 ```json
 {"type":"raw_input","phase":"intake","text":"full important input"}
 {"type":"goal","phase":"intake","summary":"objective","success_criteria":["observable result"]}
+{"type":"workmode","phase":"intake","mode":"solo-main","source":"AGENTS.md","integration":"verify -> commit -> merge main"}
 {"type":"state_update","phase":"planning","summary":"state.md refreshed","path":"tasks/leitstand/.../state.md"}
 {"type":"decision","phase":"planning","decision":"chosen path","rationale":"why"}
 {"type":"delegation","phase":"execution","scope":"bounded subtask","owner":"subagent","result":"summary when done"}
@@ -69,6 +88,22 @@ Use one JSON object per line when logging:
 ```
 
 Keep raw input only when it is useful and safe to store.
+
+## Workmode Gate
+
+Before substantial implementation, integration, or delegation, resolve how this
+repo integrates work:
+
+1. Read the repo's own agent instructions (`AGENTS.md` or equivalent).
+2. Determine the integration mode — for example solo work merged to `main`
+   frequently, versus branch/PR with CI and review.
+3. Log the resolved mode and its source as a session event.
+4. If no instructions exist, infer from strong cues, log the gap as friction,
+   and continue.
+
+Do not continue broad work while the mode is unresolved. This is what stops an
+agent from opening a PR in a private solo repo, or merging straight to `main`
+in a team one.
 
 ## Delegation
 
@@ -106,6 +141,35 @@ Log it when:
 - stale docs or old plans override current user input
 
 A useful friction entry names the trigger, impact, and prevention point.
+
+## Loop Design
+
+Whenever a task would normally force the user into repeated follow-up — waiting
+on CI, re-running review after fixes, checking whether a slice is mergeable,
+starting the next stacked slice — the agent designs the loop instead of asking.
+
+Each loop gets:
+
+- a trigger (event or cadence)
+- an action
+- a verification
+- a stop condition
+- a hard cap (max iterations or wall-clock)
+- one named human checkpoint
+
+The cap is the safety net; the stop condition is the plan. Continue the loop
+yourself when it is in scope and reversible. Ask the user only at real decision
+points: scope change, irreversible side effect, ambiguous tradeoff, or an
+explicit approval gate.
+
+Loop prompt shape:
+
+```text
+Loop: <short name>. Trigger: <event or cadence>. Action: <what I will do>.
+Verify: <evidence/check>. Stop when: <completion/blocker condition>.
+Cap: <max iterations or wall-clock>. Human checkpoint: <the one decision the
+user must make, or "none until blocker/approval gate">.
+```
 
 ## Workflow
 
@@ -151,3 +215,13 @@ Do not close the session until:
 - temporary artifacts are handled
 - verification evidence exists
 - remaining risk is named
+
+## Close Gate
+
+Before any final answer, pause, or handoff, audit the session log for gaps:
+missing raw input, missing workmode, delegations that were never logged,
+friction that only happened in chat, missing verification or completion events.
+
+Backfill the gaps before finishing. A finding may stay open only with a
+one-line stated reason in the final response. A small audit script over the
+JSONL log makes this mechanical instead of a memory exercise.

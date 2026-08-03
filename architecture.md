@@ -27,7 +27,7 @@ skills/
   dev-review.md
   verification.md
   prompt-design.md
-  doc-writing.md
+  functional-writing.md
   person-context.md
 
 context/
