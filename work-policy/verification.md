@@ -1,38 +1,51 @@
-# Work Policy Blueprint: Verification
+# Work Policy: Verification
 
-Done requires proof.
+Always-on. Short by design — the mechanics live in the `verification` skill.
+Adapt from interview Block 3.
 
-Verification is part of the work, not an afterthought at the end.
+---
 
 ## Rule
 
-Do not claim done, fixed, working, ready, or shipped without evidence.
+Done requires proof. Do not say done, fixed, working, ready, passes, or shipped
+without evidence you actually produced this session.
 
-Evidence can be:
+Verification is part of the work, not a closing flourish.
 
-- a test run
-- a build or parser check
-- direct script execution
-- rendered UI inspection
-- source-backed review
-- final document read-through
+## Strength Matched To Risk
 
-## Match The Check To The Risk
+<Block 3 = A: "Every change carries a run command and its output.">
 
-- Code change: run targeted tests or direct execution.
-- Bug fix: reproduce the failure before and after when feasible.
-- Prompt or skill change: read the final instruction and run a small scenario.
-- UI change: render the affected surface.
-- Docs-only change: read the final document.
-- Data or destructive change: dry-run or use a representative copy first.
+<Block 3 = B — recommended default:>
+Always hard evidence: data integrity, security, auth, money, migrations, public
+contracts, and anything that has broken before. A focused read-through is enough
+for: comments, docs, formatting, and single-token typo fixes.
 
-## Report
+<Block 3 = C: "Run checks when asked; always report what was and was not
+checked.">
 
-State:
+The project's proof command is:
 
-- what was checked
-- what passed
-- what remains unverified
-- why any stronger check was not run
+```bash
+<verify_command from Block 3>
+```
 
-Do not convert incomplete verification into confidence language.
+## Test Strategy
+
+There is no universal test-first mandate. Pick the mechanism by problem shape:
+
+- **Known bug or regression:** reproduce it in a failing test first, then fix.
+- **Refactoring:** characterize current behavior in tests before restructuring.
+- **New stable contract** (API, schema, protocol): test-first when it sharpens
+  the contract.
+- **Exploratory or UI work:** discover first, then lock the stabilized behavior
+  in with rendered or behavioral evidence.
+
+What is optional is the *sequence*. The delivery evidence is not.
+
+## Blocked Verification
+
+If verification is impossible, say so explicitly: what could not be checked, why,
+and the next best check. Never convert an incomplete check into confident
+language, and never present a clean diff or a successful build as proof that
+behavior is correct.

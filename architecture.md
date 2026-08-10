@@ -1,112 +1,106 @@
 # Architecture
 
-Stellwerk-style runtime structure is a layering discipline for agent
-instructions.
-
-The goal is not to make the prompt bigger. The goal is to put the right
-instruction in the right place.
+A layering discipline for agent instructions. The goal is not a bigger prompt.
+The goal is the right instruction in the right place, loaded at the right time.
 
 ## Layers
 
 ```text
-identity/
-  role.md
-  tone.md
-
-work-policy/
-  execution.md
-  verification.md
-  privacy.md
-  change-workflow.md
-
-skills/
-  leitstand.md
-  research.md
-  meeting-recap.md
-  challenge.md
-  dev-review.md
-  verification.md
-  prompt-design.md
-  functional-writing.md
-  person-context.md
-
-context/
-  private or conditional context, not always-on
+identity/            # always-on: role, tone, non-negotiables
+work-policy/         # always-on: execution, verification, coding, routing, privacy
+skills/              # loaded on match: full procedures with their own scripts
+context/             # loaded on demand: people, projects, customers
+overlays/            # per-runtime: model names, effort, tool quirks   (only if multi-runtime)
 ```
+
+## Where Does This Line Go?
+
+The only question that matters during an install. Answer it per line, not per
+file.
+
+| Question | Answer |
+|----------|--------|
+| Does it apply to nearly every session? | always-on |
+| Does it apply to a recognizable kind of task? | skill |
+| Does it apply to one person, project, or customer? | context |
+| Is it true only for one runtime or model family? | overlay |
+| Does it apply to one repository? | that repo's instructions, not global |
+
+Two failure modes, both common:
+
+- **Everything always-on.** The prompt grows, the important lines get diluted,
+  and the model follows the wrong one at the wrong moment.
+- **Everything in skills.** Nothing routes, because the always-on layer never
+  says *when to go look*. This is why `work-policy/routing.md` exists.
 
 ## Always-On Layer
 
-Keep this small.
+Budget: ~200 lines total, all files combined. Treat it as a hard budget — when
+something new must go in, something old comes out.
 
-Use it for:
+Belongs here: role and tone, the act/ask boundary, the verification expectation,
+scope discipline, privacy boundaries, and the routing gates.
 
-- role and tone
-- how the agent should act by default
-- safety and privacy boundaries
-- verification expectation
-- when to ask versus when to proceed
-
-Do not use it for:
-
-- transcripts
-- detailed person files
-- customer instructions
-- project-specific deployment paths
-- long examples
-- historical logs
+Does not belong here: transcripts, person files, customer instructions,
+project-specific paths, long examples, historical logs, or any procedure a
+competent agent only needs occasionally.
 
 ## Skill Layer
 
-Use skills for repeatable workflows.
+One directory per skill. `SKILL.md` carries frontmatter whose `description` is
+the routing contract; `references/` carries detail loaded on demand; `scripts/`
+carries anything mechanical.
 
-Good skill candidates:
+Good skills: session orchestration, research, meeting recap, planning challenge,
+implementation, code review, architecture review, verification, document
+writing, prompt design.
 
-- session orchestration
-- research
-- meeting recap
-- planning challenge
-- code review
-- verification
-- document writing
-- prompt and instruction design
-- person-context curation
+Bad skills: one-off project notes, private relationship context, a single
+customer workaround, secrets, or long raw examples that belong in docs.
 
-Bad skill candidates:
-
-- one-off project notes
-- private relationship context
-- a single customer workaround
-- secrets or credentials
-- long raw examples that belong in docs
+Full authoring rules: `skills/README.md`.
 
 ## Context Layer
 
-Context is conditional. Load it only when the current task needs it.
+Conditional by definition. Loaded only when the task needs it: person
+preferences, project guidance, customer background, prior decisions, research
+notes.
 
-Examples:
+Every context file needs an owner and a trigger. If nobody can say when it
+should load, it does not belong in a runtime — it belongs in a document.
 
-- person-specific communication preferences
-- project-specific repo guidance
-- customer background
-- prior decisions
-- research notes
+## Overlay Layer
 
-Private context should have an owner and a reason. If nobody can explain when it
-should load, it does not belong in a reusable runtime.
+Only once a second runtime exists. Provider-specific behavior — model names,
+effort values, thinking controls, subagent mechanics, tool quirks — goes here,
+never into a shared skill. A shared skill that names one provider's models has
+stopped being shared.
 
 ## Session Logs
 
-A session log is useful when work spans multiple turns, subagents, or context
-windows.
+Worth it when work spans multiple turns, workers, or context windows. Structure:
+raw input, goal and success criteria, workmode, decisions and reversals,
+blockers and friction, delegated work, verification evidence, completion.
 
-Keep it structured:
+Two artifacts with different jobs, and the split is the point:
 
-- raw user input when it matters
-- goal and success criteria
-- decisions and revisions
-- blockers and friction
-- delegated work
-- verification evidence
-- completion state
+- **`session.jsonl`** — append-only audit trail. Raw input stored verbatim
+  *before* summarizing.
+- **`state.md`** — compact working memory. What a fresh chat or worker reads
+  instead of replaying the conversation.
 
-Do not put sensitive raw logs into a public starter repo.
+That split is what survives context compaction. One file trying to be both is
+either too long to load or too lossy to trust.
+
+Never put sensitive raw logs in a repo that leaves the machine.
+
+## Deployment
+
+With one runtime, edit the files in place; there is nothing to deploy.
+
+With several, keep one source directory and either symlink or copy out per
+target with a small script. Assembly per target is: identity, work policy, that
+runtime's overlay, shared skills, that runtime's skills, tools and hooks.
+
+Context is never assembled into a prompt. It is loaded deliberately, by a skill
+or by an explicit need.

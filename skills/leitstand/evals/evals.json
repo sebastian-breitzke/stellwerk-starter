@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "skill": "leitstand",
+  "note": "Replace every prompt with the user's own phrasing before trusting a run. Grade on a structured skill/tool event, not on how the answer reads.",
+  "cases": [
+    {
+      "id": "long-dictation",
+      "prompt": "Also pass auf, wir haben da diese Sache mit dem Import, das zieht sich jetzt schon eine Weile, ich hätte gern dass wir das mal richtig aufziehen — erst schauen was da eigentlich schiefgeht, dann den Fix, und ich will am Ende wissen dass es wirklich läuft.",
+      "expect": "trigger"
+    },
+    {
+      "id": "multi-component-build",
+      "prompt": "We need to add tenant scoping to the API, the worker, and the admin UI, plus a migration. Can you take this end to end?",
+      "expect": "trigger"
+    },
+    {
+      "id": "explicit-orchestration",
+      "prompt": "orchestrate this properly, I don't want to babysit it",
+      "expect": "trigger"
+    },
+    {
+      "id": "handoff-request",
+      "prompt": "write me something I can paste into a fresh chat so it can pick this up tomorrow",
+      "expect": "trigger"
+    },
+    {
+      "id": "resume-after-compaction",
+      "prompt": "wo waren wir? mach da weiter wo wir aufgehört haben",
+      "expect": "trigger"
+    },
+    {
+      "id": "single-lookup",
+      "prompt": "what does line 40 of config.ts do?",
+      "expect": "no-trigger"
+    },
+    {
+      "id": "one-step-edit",
+      "prompt": "rename this variable to userCount",
+      "expect": "no-trigger"
+    },
+    {
+      "id": "plain-planning",
+      "prompt": "was hältst du von dem Ansatz, erstmal alles über einen Queue-Worker zu schicken?",
+      "expect": "no-trigger",
+      "belongs_to": "challenge"
+    }
+  ]
+}
