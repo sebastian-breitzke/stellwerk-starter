@@ -1,48 +1,112 @@
 {
-  "version": 1,
+  "schemaVersion": 1,
   "skill": "leitstand",
-  "note": "Replace every prompt with the user's own phrasing before trusting a run. Grade on a structured skill/tool event, not on how the answer reads.",
   "cases": [
     {
-      "id": "long-dictation",
-      "prompt": "Also pass auf, wir haben da diese Sache mit dem Import, das zieht sich jetzt schon eine Weile, ich hätte gern dass wir das mal richtig aufziehen — erst schauen was da eigentlich schiefgeht, dann den Fix, und ich will am Ende wissen dass es wirklich läuft.",
-      "expect": "trigger"
+      "id": "substantial-direction",
+      "providers": ["codex", "claude"],
+      "prompt": "Ich gebe dir jetzt einen größeren Auftrag: Prüfe unsere bestehende Berechtigungsarchitektur, teile die spätere Umsetzung in sinnvolle Slices, lass eine unabhängige Bestandsaufnahme machen und halte die Entscheidungen so fest, dass wir morgen nahtlos weitermachen können. Fang bitte mit der sauberen Arbeitsgrundlage an, aber ändere noch keinen Produktcode.",
+      "expectedSkills": ["leitstand"],
+      "forbiddenSkills": ["secret-resolution"],
+      "artifactExpectation": "leitstand-created"
     },
     {
-      "id": "multi-component-build",
-      "prompt": "We need to add tenant scoping to the API, the worker, and the admin UI, plus a migration. Can you take this end to end?",
-      "expect": "trigger"
+      "id": "explicit-leitstand",
+      "providers": ["codex", "claude"],
+      "prompt": "Starte dafür eine Leitstand-Session. Bewahre diesen O-Ton auf, lege Ziel und State an und stoppe anschließend: Wir wollen später drei zusammenhängende UI-Änderungen mit unabhängiger Review koordinieren.",
+      "expectedSkills": ["leitstand"],
+      "forbiddenSkills": ["secret-resolution"],
+      "artifactExpectation": "leitstand-created"
     },
     {
-      "id": "explicit-orchestration",
-      "prompt": "orchestrate this properly, I don't want to babysit it",
-      "expect": "trigger"
+      "id": "trivial-negative",
+      "providers": ["codex", "claude"],
+      "prompt": "Wie viele Sekunden sind zwei Minuten? Antworte nur mit der Zahl.",
+      "expectedSkills": [],
+      "forbiddenSkills": ["leitstand", "secret-resolution", "dev-implement"],
+      "artifactExpectation": "leitstand-absent",
+      "finalMustMatch": ["^120$|\\b120\\b"]
     },
     {
-      "id": "handoff-request",
-      "prompt": "write me something I can paste into a fresh chat so it can pick this up tomorrow",
-      "expect": "trigger"
+      "id": "ordinary-planning-negative",
+      "providers": ["codex", "claude"],
+      "prompt": "Lass uns kurz überlegen: Welche zwei Vor- und Nachteile hat ein Monorepo für ein kleines Team? Wir wollen heute nichts umsetzen oder festhalten. Antworte knapp.",
+      "expectedSkills": [],
+      "forbiddenSkills": ["leitstand", "secret-resolution", "dev-implement"],
+      "artifactExpectation": "leitstand-absent"
     },
     {
-      "id": "resume-after-compaction",
-      "prompt": "wo waren wir? mach da weiter wo wir aufgehört haben",
-      "expect": "trigger"
+      "id": "narrow-readonly-negative",
+      "providers": ["codex", "claude"],
+      "prompt": "Lies die README in diesem Ordner und nenne nur ihre Überschrift. Verändere nichts.",
+      "expectedSkills": [],
+      "forbiddenSkills": ["leitstand", "secret-resolution", "dev-implement"],
+      "artifactExpectation": "leitstand-absent",
+      "finalMustMatch": ["Isolated Stellwerk routing eval fixture"]
     },
     {
-      "id": "single-lookup",
-      "prompt": "what does line 40 of config.ts do?",
-      "expect": "no-trigger"
+      "id": "one-step-edit-negative",
+      "providers": ["codex", "claude"],
+      "prompt": "Ersetze in der README dieses Ordners die Überschrift durch '# Routing Fixture'. Das ist die gesamte Aufgabe.",
+      "expectedSkills": [],
+      "forbiddenSkills": ["leitstand", "dev-implement", "secret-resolution"],
+      "artifactExpectation": "direct-readme-edited"
     },
     {
-      "id": "one-step-edit",
-      "prompt": "rename this variable to userCount",
-      "expect": "no-trigger"
+      "id": "single-component-regression",
+      "providers": ["codex", "claude"],
+      "prompt": "Der Konfigurationsparser akzeptiert derzeit ungültige leere Schlüssel. Behebe diese Regression mit einem belastbaren Nachweis, ohne andere Parserregeln zu verändern. Beginne mit der Arbeitsaufnahme und stoppe, bevor du Produktcode erfindest, weil dieses Fixture keinen Parser enthält.",
+      "expectedSkills": ["leitstand", "dev-implement", "dev-discipline"],
+      "forbiddenSkills": ["secret-resolution"],
+      "artifactExpectation": "leitstand-created"
     },
     {
-      "id": "plain-planning",
-      "prompt": "was hältst du von dem Ansatz, erstmal alles über einen Queue-Worker zu schicken?",
-      "expect": "no-trigger",
-      "belongs_to": "challenge"
+      "id": "meaningful-dev-combined",
+      "providers": ["codex", "claude"],
+      "prompt": "Wir müssen einen nicht-trivialen Fehler über Backend, API-Vertrag und Frontend beheben. Das Verhalten ändert sich, Tests und zwei Reviews sind nötig. Initialisiere den vorgeschriebenen dauerhaften Arbeitsstate, nenne die passenden Implementierungs-Skills und stoppe vor Codeänderungen.",
+      "expectedSkills": ["leitstand", "dev-implement", "dev-discipline"],
+      "forbiddenSkills": ["secret-resolution"],
+      "artifactExpectation": "leitstand-created",
+      "finalMustMatch": ["dev-implement", "dev-discipline"]
+    },
+    {
+      "id": "structural-boundary-preflight",
+      "providers": ["codex", "claude"],
+      "prompt": "Wir planen in einer Leitstand-Session eine nicht-triviale Änderung, die ein Modul, einen öffentlichen API-Vertrag, gemeinsam geschriebenen Zustand und eine Workflow-Grenze verändert. Lege nur den dauerhaften Arbeitsstate und die notwendigen Architektur- und Verifikationsgates an; stoppe vor der Implementierung.",
+      "expectedSkills": ["leitstand", "dev-implement", "dev-review"],
+      "forbiddenSkills": ["secret-resolution"],
+      "artifactExpectation": "leitstand-created",
+      "finalMustMatch": [
+        "dev-review|DevReview",
+        "Pre-Implementation|Pre-Implementation-Modus",
+        "decision|Entscheidung",
+        "betroffene(n)? (Flächen|Schnittstellen)|affected (surfaces|interfaces)",
+        "(Sicherheitsannahme|sicherheitskritische Annahme)[\\s\\S]{0,160}(Evidenz|Nachweis|Beleg)|(safety(-critical)? assumption|key assumption)[\\s\\S]{0,160}(evidence|proof)",
+        "No-Regression-(Check|Nachweis|Test)|no-regression (check|proof|test)|Regressions?(check|nachweis|test)|regression (check|proof|test)"
+      ]
+    },
+    {
+      "id": "feature-design-start",
+      "providers": ["codex", "claude"],
+      "prompt": "Leitstand start: Wir planen ein neues Feature für gemeinsame Freigaben. Starte eine neue dauerhafte Session, führe das Architektur-Brainstorming und die User-Interviews über Dev Challenge und stoppe am Checkpoint vor der Implementierung.",
+      "expectedSkills": ["leitstand", "dev-challenge"],
+      "forbiddenSkills": ["dev-implement", "secret-resolution"],
+      "artifactExpectation": "leitstand-created",
+      "finalMustMatch": [
+        "dev-challenge|Dev Challenge",
+        "User-Interview|Frontier|Entscheidungsfragen|interview",
+        "vor (der )?Implementierung|pre-implementation|vor Produktcode",
+        "leitstand run|/leitstand run|\\$leitstand run"
+      ]
+    },
+    {
+      "id": "company-ui-combined",
+      "providers": ["codex", "claude"],
+      "prompt": "In einem Ecovium Angular-Repository soll ein bestehender komplexer Prozess-Detail-Overlay über mehrere Komponenten geändert und gerendert verifiziert werden. Initialisiere nur den erforderlichen dauerhaften Arbeitsstate, nenne die kleinste passende Skill-Kombination und stoppe vor der Umsetzung.",
+      "expectedSkills": ["leitstand", "dev-implement", "dev-ui", "eco-working", "eco-web-ui-dev", "eco-ui"],
+      "forbiddenSkills": ["secret-resolution", "research"],
+      "artifactExpectation": "leitstand-created",
+      "finalMustMatch": ["dev-implement", "dev-ui", "eco-working", "eco-web-ui-dev", "eco-ui"]
     }
   ]
 }

@@ -134,10 +134,12 @@ Sources to adapt:
 - [work-policy/](work-policy/) — execution, verification, coding, routing, privacy
 - [skills/README.md](skills/README.md) — **read this before writing any skill**
 - [skills/leitstand/](skills/leitstand/) — the worked example: references, scripts, evals
-- development skills: challenge, implementation, discipline, dev-review,
-  code-review, domain-language, UI, GitHub PR follow-up, and change notes
-- supporting skills: research, meeting-recap, prompt-design, functional-writing,
-  person-context
+- canonical Core skills: `dev-challenge`, `dev-implement`, `dev-discipline`,
+  `dev-review`, `dev-code-review`, `dev-domain-language`, `dev-ui`,
+  `dev-github-pr`, `dev-change-notes`, `prompt-creation-review`,
+  `functional-writing`, `ax-review`, `smb-pragmatism`, and `unslop`
+- portable user setup: `leitstand`, `tone-of-voice`, `secret-resolution`,
+  `transcription`, and `youtube-research`
 
 Background:
 
@@ -157,7 +159,7 @@ This repo contains none of it, deliberately. Keep it that way in yours.
 
 1. Write a concise identity and work policy. Keep both short.
 2. Add `leitstand` for orchestration.
-3. Add `discipline` for testing, debugging, and proof-before-done.
+3. Add `dev-discipline` for testing, debugging, and proof-before-done.
 4. Add whichever third skill matches your actual week.
 5. Run a real task through it.
 6. Adjust from evidence, not from imagined future needs.

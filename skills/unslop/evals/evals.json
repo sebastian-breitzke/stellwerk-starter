@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "skill": "unslop",
+  "cases": [
+    {
+      "id": "conservative-draft-validation",
+      "providers": ["codex", "claude"],
+      "prompt": "Nutze Unslop als letzte Validation für diesen Entwurf. Entferne Floskeln und Puffery, aber ändere keine Fakten, Unsicherheit, Warnungen, Fachbegriffe, Zitate, Commands oder Identifiers. Gib nur den bereinigten Text zurück.",
+      "expectedSkills": ["unslop"],
+      "forbiddenSkills": ["functional-writing", "sebastian-tone-of-voice", "leitstand", "dev-implement"],
+      "artifactExpectation": "leitstand-absent"
+    }
+  ]
+}

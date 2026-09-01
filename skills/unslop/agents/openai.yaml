@@ -1,0 +1,6 @@
+interface:
+  display_name: "Unslop"
+  short_description: "Remove language slop without changing substance"
+  default_prompt: "Use $unslop to clean up this draft without changing its facts, voice, or force."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dev Challenge"
+  short_description: "Challenge plans and run decision-tree interviews"
+  default_prompt: "Use $dev-challenge to challenge this plan or interview me through the current decision frontier. Fetch discoverable facts yourself, ask the full frontier per round with recommendations, and stop when the next implementation or document step is clear."

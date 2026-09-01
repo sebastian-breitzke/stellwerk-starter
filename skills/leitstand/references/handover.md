@@ -1,61 +1,68 @@
 # Mode: Handover
 
-Produce a self-contained artifact so another session — a new chat, a different
-runtime, a parallel agent — can continue without re-explaining anything.
+Produce a self-contained handover artifact so another session (new Claude chat,
+Codex session, or a parallel agent) can continue the work without re-explaining
+context. This mode runs against the ACTIVE session; do not restart the Leitstand
+workflow.
 
 ## Procedure
 
-1. Ensure the active session exists; scaffold first if it does not.
-2. Refresh or read `state.md`. Collect the current goal, decision state, what is
-   verified versus open, blockers, and the exact evidence used.
-3. Write `handover.md` into the session folder.
-4. Append a `decision` event referencing the path, and a `state_update` if the
-   handover changed current state.
-5. Echo the artifact in chat, followed by one copy-paste goal pointing at it.
+1. Ensure the active Leitstand log exists. If not, scaffold it first
+   (`scripts/leitstand-scaffold.mjs`) and note the late scaffold in the log.
+2. Refresh or read `state.md` first. Then collect grounding from the active
+   session: current goal, decision state, verified vs. open work, blockers, and
+   the exact file/DB/log evidence used.
+3. Write the artifact to the active session folder as `handover.md`.
+4. Append a `decision` event referencing the handover path, and a `state_update`
+   event if the handover changed current state.
+5. Echo the full artifact in chat, followed by one copy-paste goal
+   (see `references/goal.md`) that points at the artifact.
 
-## Contract
+## Artifact Contract
 
-**Pointers over duplication.** Reference specs, commits, and `state.md` by path.
-Never restate content that already lives elsewhere. The artifact is disposable
-once consumed.
+Pointers over duplication is a hard rule: reference specs, ADRs, commits, and
+`state.md` by path — never restate content that already lives elsewhere. The
+artifact is disposable once consumed.
 
-Keep these three separate — mixing them is the classic failure:
+`handover.md` must separate these sections explicitly — Auftrag, Quelle, and
+Ziel-Basis are different things and mixing them is a known failure:
 
 ```md
 # Handover: <short title>
 
-## Assignment
-<what the next agent must achieve — outcome, not activity>
+## Auftrag
+<what the next agent must do — outcome, not activity>
 
-## Sources (read before working)
-<files, logs, data evidence, prior findings — the factual basis.
-A single ticket is a starting point, never the complete source basis.
-List every source the next agent must read first.>
+## Quellen (Ist-Stand, gelesen bevor gearbeitet wird)
+<files, logs, DB evidence, prior findings — the factual basis. A single issue
+file is a Startauftrag, never the complete Quellenbasis. List every source the
+next agent must read first.>
 
-## Reference (what "good" looks like)
-<existing patterns, pages, or artifacts that define the target shape.
-Reference material — not a source of truth.>
+## Ziel-Basis (Stil-/Strukturreferenz)
+<existing target pages, patterns, or artifacts that define what "good" looks
+like — reference material, not sources of truth>
 
-## Status
-<done+verified / in progress / open — each with an evidence pointer>
+## Stand
+<done+verified / in progress / open, each with evidence pointer>
 
-## Current State
-<path to state.md and the facts to treat as current>
+## Aktueller State
+<path to state.md and the exact state facts the next agent should treat as current>
 
 ## Workmode & Integration
-<mode, integration rule, repo/branch, session log path>
+<mode, integration rule, repo/worktree, log path: leitstand/<session>/leitstand.jsonl>
 
-## Open Risks / Blockers
+## Offene Risiken / Blocker
 <known traps, stale assumptions to avoid>
 ```
 
-## Rules
+Rules:
 
-- Self-contained: it must not rely on the surrounding chat.
-- State-backed: it may quote `state.md`, it must not replace it.
-- Runtime-neutral inside the artifact; the copy-paste goal underneath may name
-  a model and effort.
-- Every status claim carries evidence — a commit, a file, a test, a log line.
-  Unverified means unverified; do not launder assumptions into facts.
-- For parallel fan-out, state the owned area per target session so slices cannot
-  collide.
+- Self-contained: the artifact must not rely on the surrounding chat.
+- State-backed: use `state.md` as the compact current-state basis. The handover
+  may quote or summarize state facts, but it must not replace `state.md`.
+- Runtime-neutral: no Claude- or Codex-specific phrasing inside the artifact;
+  the copy-paste goal underneath may name runtime and effort.
+- Ground every "Stand" claim in evidence (commit, file, test, log line).
+  If something is unverified, say so — do not launder assumptions into facts.
+- For parallel fan-out (several sessions on one objective), state the owned
+  area per target session so the slices cannot collide.

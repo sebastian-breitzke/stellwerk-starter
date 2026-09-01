@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "skill": "dev-domain-language",
+  "cases": [
+    {
+      "id": "kurshalten-neubegriff",
+      "providers": ["codex", "claude"],
+      "prompt": "Wir planen im Fixture-Repo dieses Ordners weiter. Ich nenne das Ding ab jetzt 'Routing-Kachel'. Prüfe, ob der Begriff zur bestehenden Sprache des Repos passt, bevor du ihn übernimmst.",
+      "expectedSkills": ["dev-domain-language"],
+      "forbiddenSkills": ["leitstand", "dev-implement"],
+      "artifactExpectation": "leitstand-absent",
+      "finalMustMatch": ["[Nn]euer Begriff|neu oder (etwas )?[Bb]estehend"]
+    },
+    {
+      "id": "kurshalten-checkrunde",
+      "providers": ["codex", "claude"],
+      "prompt": "Bevor wir aus unserer Diskussion Tickets machen: Mach eine Begriffs-Checkrunde. Sind die Begriffe, die wir benutzt haben, die richtigen aus dem Repo? Gibt es Mehrdeutigkeiten?",
+      "expectedSkills": ["dev-domain-language"],
+      "forbiddenSkills": ["leitstand", "dev-implement"],
+      "artifactExpectation": "leitstand-absent",
+      "finalMustMatch": ["Terms Resolved|Ambiguities"]
+    },
+    {
+      "id": "canonical-english-terms",
+      "providers": ["codex", "claude"],
+      "prompt": "Prüfe die Terminologie dieses deutschen Arbeitsplans. Im Repo heißen die Konzepte Slice, Skill und Worktree. Behalte diese etablierten englischen Begriffe exakt bei und erfinde keine deutschen Übersetzungen.",
+      "expectedSkills": ["dev-domain-language"],
+      "forbiddenSkills": ["functional-writing", "leitstand", "dev-implement"],
+      "artifactExpectation": "leitstand-absent",
+      "finalMustMatch": ["Slice", "Skill", "Worktree"]
+    }
+  ]
+}

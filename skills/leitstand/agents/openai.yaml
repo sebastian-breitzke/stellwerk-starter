@@ -1,0 +1,4 @@
+interface:
+  display_name: "Leitstand"
+  short_description: "Run meaningful changes with durable state and orchestration"
+  default_prompt: "Use $leitstand to preserve my raw input, maintain the session log and state, orchestrate the smallest useful set of workers, and drive this meaningful change through verification and integration."

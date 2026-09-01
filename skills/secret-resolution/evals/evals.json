@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "skill": "secret-resolution",
+  "cases": [
+    {
+      "id": "local-operator-missing",
+      "providers": ["codex"],
+      "prompt": "Für eine lokale read-only Untersuchung fehlt dir ein Operator-Token namens routing-eval-token. Prüfe zuerst den vorgesehenen lokalen Secret Store, bevor du mich fragst. Gib keinen Secret-Wert aus und stoppe, sobald du weißt, ob der Eintrag vorhanden ist.",
+      "expectedSkills": ["secret-resolution"],
+      "forbiddenSkills": ["leitstand"],
+      "artifactExpectation": "hort-called",
+      "fakeHort": true
+    },
+    {
+      "id": "gefuege-runtime-negative",
+      "providers": ["codex", "claude"],
+      "prompt": "Wo soll ein neues Datenbank-Secret gespeichert werden, das eine Anwendung zur Laufzeit benötigt? Führe nichts aus und antworte in höchstens zwei Sätzen.",
+      "expectedSkills": ["secret-resolution"],
+      "forbiddenSkills": ["leitstand"],
+      "artifactExpectation": "hort-absent",
+      "fakeHort": true,
+      "finalMustMatch": ["Anwendung|Instanz|instance", "Secret|Config|Konfiguration"],
+      "finalMustNotMatch": ["in hort speichern|store in hort"]
+    },
+    {
+      "id": "meaningful-access-combined",
+      "providers": ["codex"],
+      "prompt": "Plane eine mehrstufige lokale Infrastruktur-Untersuchung, für die ein Operator-Service-URL und Token benötigt werden. Es gibt mehrere Systeme, eine unabhängige Prüfung und eine spätere Übergabe. Initialisiere nur den dauerhaften Arbeitsstate und prüfe den lokalen Secret Store; führe keine externe Verbindung aus und gib keine Werte aus.",
+      "expectedSkills": ["leitstand", "secret-resolution"],
+      "forbiddenSkills": [],
+      "artifactExpectation": "leitstand-and-hort",
+      "fakeHort": true
+    }
+  ]
+}

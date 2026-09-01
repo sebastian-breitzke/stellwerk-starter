@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "skill": "functional-writing",
+  "cases": [
+    {
+      "id": "repository-grounded-how-to",
+      "providers": ["codex", "claude"],
+      "prompt": "Schreibe aus den vorhandenen Repo-Dateien eine kurze How-to-Anleitung für den Deploy. Prüfe Commands, Pfade, Flags und Defaults am Code, beginne mit dem Common Case und lasse etablierte Begriffe wie Skill, Slice und Worktree auf Englisch. Führe danach die konservative Unslop-Validation aus.",
+      "expectedSkills": ["functional-writing", "unslop"],
+      "forbiddenSkills": ["leitstand", "dev-implement"],
+      "artifactExpectation": "leitstand-absent",
+      "finalMustMatch": ["Skill", "Slice", "Worktree"]
+    }
+  ]
+}

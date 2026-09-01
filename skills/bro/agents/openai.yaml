@@ -1,0 +1,6 @@
+interface:
+  display_name: "Bro"
+  short_description: "Rewrite the last answer in plain human language"
+  default_prompt: "Use $bro to rewrite your last answer more simply and concisely."
+policy:
+  allow_implicit_invocation: false

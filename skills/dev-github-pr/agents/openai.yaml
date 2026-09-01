@@ -1,0 +1,4 @@
+interface:
+  display_name: "GitHub PR Follow-Up"
+  short_description: "Check PR status, title fit, and review input against local state, then triage and close review threads cleanly"
+  default_prompt: "Use this only for company/PR-mode GitHub pull request tasks, not for private solo work. First detect whether a PR exists for the current branch, run this skill's scripts/gh_pr_snapshot.py, and compare GitHub review comments and unresolved threads against local code. If the user asked for a PR and none exists yet, push if needed and create it directly. Check title fit, classify each item as should_do / could_do / stale_or_wrong / irrelevant, propose next moves, wait for explicit go before editing, then re-check title fit, update the PR title if necessary, reply to addressed comments, and resolve only threads that are actually closed."

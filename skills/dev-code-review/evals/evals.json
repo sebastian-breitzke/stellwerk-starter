@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "skill": "dev-code-review",
+  "cases": [
+    {
+      "id": "constraint-safe-comments-review",
+      "providers": ["codex", "claude"],
+      "prompt": "Reviewe diesen Diff ausschließlich auf Kommentare und Suppressions. Entferne keinen potenziell gültigen Constraint-Kommentar, bevor der Constraint nachweislich obsolet oder in Type, Test, Runtime Check oder CI codifiziert ist. Ändere den Code nicht.",
+      "expectedSkills": ["dev-code-review"],
+      "forbiddenSkills": ["dev-implement", "leitstand"],
+      "artifactExpectation": "leitstand-absent",
+      "finalMustMatch": ["Verdict", "Must-Fix", "Verified"]
+    }
+  ]
+}

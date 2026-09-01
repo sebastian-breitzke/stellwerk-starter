@@ -1,0 +1,4 @@
+interface:
+  display_name: "Functional Writing"
+  short_description: "Write clear functional prose in German or English"
+  default_prompt: "Use $functional-writing for this functional text. Select exactly one mode from the user's requested operation: Draft, Rewrite, Restructure, or Review."

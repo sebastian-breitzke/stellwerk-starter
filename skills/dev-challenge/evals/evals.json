@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "skill": "dev-challenge",
+  "cases": [
+    {
+      "id": "grill-frontier-rounds",
+      "providers": ["codex", "claude"],
+      "prompt": "Grill mich zu meinem Plan: Ich will unser internes CLI-Tool von Node auf Bun migrieren, gleichzeitig das Config-Format von JSON auf TOML umstellen und die Release-Pipeline vereinfachen. Die drei Teile sind unabhängig voneinander. Stelle mir deine Fragen.",
+      "expectedSkills": ["dev-challenge"],
+      "forbiddenSkills": ["leitstand", "dev-implement"],
+      "artifactExpectation": "leitstand-absent",
+      "finalMustMatch": ["❓ \\*\\*Q1\\*\\*", "❓ \\*\\*Q2\\*\\*", "➡️"]
+    },
+    {
+      "id": "grill-facts-not-asked",
+      "providers": ["codex", "claude"],
+      "prompt": "Grill mich zu meinem Plan, die README in diesem Ordner grundlegend umzustrukturieren. Entscheidungen treffe ich, aber Fakten über den Ist-Zustand holst du dir bitte selbst.",
+      "expectedSkills": ["dev-challenge"],
+      "forbiddenSkills": ["leitstand", "dev-implement"],
+      "artifactExpectation": "leitstand-absent",
+      "finalMustMatch": ["Isolated Stellwerk routing eval fixture|routing eval fixture"],
+      "finalMustNotMatch": ["was steht (aktuell |derzeit )?in der README"]
+    },
+    {
+      "id": "grill-full-depth-exit",
+      "providers": ["codex", "claude"],
+      "prompt": "Grille mich komplett durch zu der Entscheidung, ob unser Team Feature-Branches oder Trunk-Based Development nutzen soll. Höre nicht auf, bevor jeder Zweig des Entscheidungsbaums besucht ist.",
+      "expectedSkills": ["dev-challenge"],
+      "forbiddenSkills": ["leitstand", "dev-implement"],
+      "artifactExpectation": "leitstand-absent",
+      "finalMustMatch": ["❓ \\*\\*Q1\\*\\*", "➡️"]
+    }
+  ]
+}

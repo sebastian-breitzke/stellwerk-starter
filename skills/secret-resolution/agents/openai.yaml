@@ -1,0 +1,4 @@
+interface:
+  display_name: "Secret Resolution"
+  short_description: "Resolve operator secrets safely through hort"
+  default_prompt: "Use $secret-resolution to resolve this local operator credential through hort without exposing it or confusing it with product runtime configuration."

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "skill": "bro",
+  "cases": [
+    {
+      "id": "last-answer-plain-language",
+      "providers": ["codex", "claude"],
+      "prompt": "Nutze Bro. Formuliere ausschließlich deine letzte Antwort einfacher und kürzer, wie ein Mensch mit einem anderen Menschen. Füge keine neue Analyse hinzu.",
+      "expectedSkills": ["bro"],
+      "forbiddenSkills": ["functional-writing", "unslop", "leitstand", "dev-implement"],
+      "artifactExpectation": "leitstand-absent",
+      "finalMustNotMatch": ["Analyse|Ich habe|Überarbeitung"]
+    }
+  ]
+}
