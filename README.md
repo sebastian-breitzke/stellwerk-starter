@@ -139,7 +139,8 @@ Sources to adapt:
   `dev-github-pr`, `dev-change-notes`, `prompt-creation-review`,
   `functional-writing`, `ax-review`, `smb-pragmatism`, and `unslop`
 - portable user setup: `leitstand`, `tone-of-voice`, `secret-resolution`,
-  `transcription`, and `youtube-research`
+  `brave-search`, `research`, `transcription`, `youtube-research`, and
+  `meeting-recap`
 
 Background:
 

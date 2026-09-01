@@ -23,13 +23,18 @@ better than a broad default installation.
 | Conservative prose cleanup | `unslop` |
 | Private writing profile setup | `tone-of-voice` |
 | Safe local credential routing | `secret-resolution` |
+| Brave web retrieval | `brave-search` |
+| Source-backed research | `research` |
 | Local media transcription | `transcription` |
 | YouTube research | `youtube-research` |
+| Meeting recaps and follow-up | `meeting-recap` |
 
 `dev-implement` sequences delivery; `dev-discipline` supplies evidence;
 `dev-review` judges design; and `dev-code-review` judges a finished diff. Do not
 collapse those jobs into one broad skill.
 
-`brave-search`, `research`, and `meeting-recap` remain classified extensions:
-their canonical public release waits for the remaining genericization or setup
-guidance. Private integrations and personal profiles are never copied here.
+`brave-search` is optional and setup-gated: the user needs a Brave API key in an
+approved local secret manager before it can run. `research` falls back to native
+web retrieval when Brave is unavailable. `meeting-recap` deliberately keeps
+private working notes and stakeholder context out of shareable output. Private
+integrations and personal profiles are never copied here.

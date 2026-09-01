@@ -96,14 +96,14 @@ now, not nine. More can be added any time in two minutes.
 - `dev-review` — architecture and approach fit
 - `dev-challenge` — pressure-test a plan before building it
 - `dev-domain-language` — keep product and code terminology aligned
-- `ui` — product-specific UI development and review
+- `dev-ui` — product-specific UI development and review
 - `dev-github-pr` — requested PR follow-up and review-thread triage *(team PR work only)*
-- `change-notes` — human-readable commit and PR descriptions
+- `dev-change-notes` — human-readable commit and PR descriptions
+- `brave-search` — direct web retrieval with a locally stored Brave API key
 - `research` — source-backed answers instead of confident memory
 - `meeting-recap` — transcripts to decisions, actions, and follow-up
 - `prompt-creation-review` — writing and reviewing prompts, skills, and tool contracts
 - `functional-writing` — durable docs, specs, runbooks, decision records
-- `person-context` — durable collaboration preferences for people they work with
 
 Records: `skills`.
 
