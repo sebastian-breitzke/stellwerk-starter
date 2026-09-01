@@ -54,7 +54,7 @@ instead of trying a third guess.
 
 ## 5. Verify
 
-Load the `verification` skill. Run the check that matches the change, read the
+Load the `discipline` skill. Run the check that matches the change, read the
 output, and keep the evidence for the summary.
 
 ## 6. Close

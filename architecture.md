@@ -52,8 +52,8 @@ the routing contract; `references/` carries detail loaded on demand; `scripts/`
 carries anything mechanical.
 
 Good skills: session orchestration, research, meeting recap, planning challenge,
-implementation, code review, architecture review, verification, document
-writing, prompt design.
+implementation, discipline, code review, architecture review, document writing,
+prompt design.
 
 Bad skills: one-off project notes, private relationship context, a single
 customer workaround, secrets, or long raw examples that belong in docs.

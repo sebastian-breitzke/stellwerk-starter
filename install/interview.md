@@ -51,8 +51,8 @@ Also ask, as one line: **what is the command that proves a change works here?**
 (`npm test`, `pytest -q`, `go test ./...`, `dotnet test`, a build, a lint.) You
 detected candidates in Phase 1 — offer them.
 
-Records: `verification`, `verify_command`. Drives `work-policy/verification.md`
-and the `verification` skill.
+Records: `verification_plan`, `verify_command`. Drives
+`work-policy/verification.md` and the `discipline` skill.
 
 ---
 
@@ -90,11 +90,15 @@ Which of these does the user actually do in a normal week? Install two or three
 now, not nine. More can be added any time in two minutes.
 
 - `leitstand` — orchestrate long, multi-step work; keep goal, decisions, and delegation straight *(the core of this starter — recommend unless the user only does one-shot tasks)*
-- `verification` — proof before "done" *(recommend always; it is small)*
+- `discipline` — test, debug, and prove changes *(recommend always; it is small)*
 - `implementation` — disciplined change slices
 - `code-review` — line-level review with hard decline gates
 - `dev-review` — architecture and approach fit
 - `challenge` — pressure-test a plan before building it
+- `domain-language` — keep product and code terminology aligned
+- `ui` — product-specific UI development and review
+- `github-pr` — requested PR follow-up and review-thread triage *(team PR work only)*
+- `change-notes` — human-readable commit and PR descriptions
 - `research` — source-backed answers instead of confident memory
 - `meeting-recap` — transcripts to decisions, actions, and follow-up
 - `prompt-design` — writing and reviewing prompts, skills, and tool contracts

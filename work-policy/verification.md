@@ -1,6 +1,6 @@
 # Work Policy: Verification
 
-Always-on. Short by design — the mechanics live in the `verification` skill.
+Always-on. Short by design — the mechanics live in the `discipline` skill.
 Adapt from interview Block 3.
 
 ---

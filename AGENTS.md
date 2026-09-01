@@ -11,9 +11,10 @@ Your job is not to summarize this repository. Your job is to run the install.
 **Task:** Interview the user, write a profile, generate their runtime files from
 the templates here, and prove the result works.
 
-**Success:** The user's runtime has an always-on layer under 200 lines, at least
-three installed skills that trigger on the right prompts, and one verification
-run whose output you showed them.
+**Success:** The user's runtime has an always-on layer under 200 lines, a small
+initial skill set that triggers on the right prompts, and one verification run
+whose output you showed them. The full Development skill set remains available
+as an extension, not an automatic install.
 
 **Never:** copy this repo wholesale into an always-on prompt; import any private
 context from anyone else's setup; write a secret into any file.
@@ -31,7 +32,8 @@ Read on demand, not upfront:
 
 - `install/verify.md` before Phase 5.
 - `skills/README.md` before you write any skill file.
-- an individual `skills/<name>/SKILL.md` when you install that skill.
+- an individual `skills/<name>/SKILL.md` when you install that skill. The
+  Development set is listed in `skills/README.md`.
 - `architecture.md` when the user asks why the layers exist.
 - `privacy-and-sharing.md` when the user wants to share their runtime.
 

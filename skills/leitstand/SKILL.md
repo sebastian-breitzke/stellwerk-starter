@@ -7,11 +7,11 @@ description: >
   this", "new session", "let's do this properly", or asks for work with
   dependent steps, multiple components, contract or regression-relevant changes,
   architecture decisions, non-trivial verification, repeated follow-up, or a
-  handoff to another agent or chat. Modes goal, handover, state, log, run,
-  resume. Not for trivial questions, confirmations, read-only lookups, or
+  handoff to another agent or chat. Modes start, goal, handover, state, log,
+  run, close, resume. Not for trivial questions, confirmations, read-only lookups, or
   one-step reversible edits; planning without delivery ownership belongs in
   challenge.
-argument-hint: "[goal|handover|state|log|run|resume|<objective>]"
+argument-hint: "[start <objective>|goal|handover|state|log|run|close|resume|<objective>]"
 ---
 
 # Leitstand
@@ -28,6 +28,14 @@ sequencing, delegation, verification, and integration.
 Do not hand coordination back to the user. Recommend a fresh session only when
 the work is genuinely outside this one and needs its own goal and log.
 
+## Start A Session
+
+`start <objective>` establishes a durable planning session. Preserve the full
+user input, scaffold the store, resolve workmode, and then challenge and plan.
+End `start` at the human checkpoint: target shape, trade-offs, open decisions,
+and verification direction are clear. Do not implement in this mode; `run` is
+the transition into execution after the direction is accepted.
+
 ## Modes
 
 When the argument starts with one of these, that mode is the **entire job of the
@@ -41,6 +49,7 @@ do not create a second session.
 | `state` | refresh the compact state file | `references/state.md` |
 | `log` | audit the log, backfill missing events | `references/log-hygiene.md` |
 | `run` | pull the next runnable slice from state, execute, verify, repeat | `references/run.md` |
+| `close` | check completion evidence, integration status, risks, and handover needs | below |
 | `resume` | re-enter an existing session from its decision state | below |
 | `orchestrate` | force the delegation checkpoint | `references/orchestrate.md` |
 
@@ -49,6 +58,10 @@ checkpoint, and pending verification, append a `workmode` event if it is
 missing, then continue from the last decision point and say what you resumed.
 
 Anything else — an objective, a dictation, no argument — runs the full workflow.
+
+`close`: audit the session, confirm that success criteria are met or explicitly
+narrowed, that delegated work was reviewed, and that verification and
+integration status are recorded. Add a `completion` event before replying.
 
 ## Session Store
 

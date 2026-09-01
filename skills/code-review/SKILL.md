@@ -5,7 +5,7 @@ description: >
   when the user asks to review a diff, PR, branch, commit, or file, when a
   self-review is requested, when pasted review findings need judging, or before
   merge confidence. Architecture and approach fit belong in dev-review;
-  verification mechanics belong in verification. This skill declines; it does
+  verification mechanics belong in discipline. This skill declines; it does
   not negotiate.
 argument-hint: "[pr-number|branch|file-list]"
 allowed-tools: Read, Grep, Glob, Bash

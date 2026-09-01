@@ -52,7 +52,7 @@ description: >
   Line-level code review with hard decline gates. Use after implementation, when
   the user asks to review a diff, PR, branch, or file, when pasted findings need
   judging, or before merge confidence. Architecture fit belongs in dev-review;
-  verification mechanics belong in verification. This skill declines, it does
+  verification mechanics belong in discipline. This skill declines, it does
   not negotiate.
 ```
 
@@ -128,3 +128,26 @@ The library improves through friction, not through planning:
 
 Nine mediocre skills are worse than three sharp ones. Add on evidence, not on
 imagined future need.
+
+## Development Set
+
+These skills are deliberately separate. Bundle them in the Starter so a user
+can add the one their work actually calls for; do not install all of them by
+default.
+
+| Work | Skill |
+|---|---|
+| Long-running, multi-step work | `leitstand` |
+| Planning pressure | `challenge` |
+| Change orchestration | `implementation` |
+| Tests, debugging, and proof | `discipline` |
+| Architecture fit | `dev-review` |
+| Line-level shippability | `code-review` |
+| Canonical domain terms | `domain-language` |
+| Product UI work | `ui` |
+| Requested GitHub PR loop | `github-pr` |
+| Commit and PR prose | `change-notes` |
+
+The handoffs are intentional: `implementation` sequences delivery;
+`discipline` supplies evidence; `dev-review` judges design; `code-review`
+judges a finished diff. Do not collapse those jobs into a single broad skill.

@@ -29,6 +29,24 @@ That is the whole entry point. The agent will:
 Twenty minutes if you engage with the questions. Five if you say "defaults are
 fine".
 
+## Share Or Update
+
+The public Starter is [sebastian-breitzke/stellwerk-starter](https://github.com/sebastian-breitzke/stellwerk-starter).
+It is safe to share because it contains adaptable runtime design, not personal
+context, session history, secrets, or customer material.
+
+To keep a local checkout current:
+
+```bash
+git clone https://github.com/sebastian-breitzke/stellwerk-starter.git
+cd stellwerk-starter
+git pull --ff-only
+```
+
+Point an agent at that checkout and use the Start instruction above. Do not copy
+the files unchanged into an existing runtime: let the installer adapt them to
+the user's runtime, language, repositories, and privacy boundary.
+
 ## What You Get
 
 ```text
@@ -116,8 +134,9 @@ Sources to adapt:
 - [work-policy/](work-policy/) — execution, verification, coding, routing, privacy
 - [skills/README.md](skills/README.md) — **read this before writing any skill**
 - [skills/leitstand/](skills/leitstand/) — the worked example: references, scripts, evals
-- ten more skills: verification, implementation, code-review, dev-review,
-  challenge, research, meeting-recap, prompt-design, functional-writing,
+- development skills: challenge, implementation, discipline, dev-review,
+  code-review, domain-language, UI, GitHub PR follow-up, and change notes
+- supporting skills: research, meeting-recap, prompt-design, functional-writing,
   person-context
 
 Background:
@@ -138,7 +157,7 @@ This repo contains none of it, deliberately. Keep it that way in yours.
 
 1. Write a concise identity and work policy. Keep both short.
 2. Add `leitstand` for orchestration.
-3. Add `verification` for proof-before-done.
+3. Add `discipline` for testing, debugging, and proof-before-done.
 4. Add whichever third skill matches your actual week.
 5. Run a real task through it.
 6. Adjust from evidence, not from imagined future needs.
