@@ -1,168 +1,135 @@
 # Stellwerk Starter
 
-Point your coding agent at this repo and it will interview you, then build you a
-working agent runtime: a compact always-on identity, a work policy that decides
-when it acts and when it asks, and a set of skills that load only when they are
-relevant.
+Stellwerk Starter is a public source library for building an agent runtime you
+own. It is not a preconfigured assistant, a SaaS product, or a prompt to paste
+into every chat.
 
-Not a framework, not a package, nothing to install with a package manager. It is
-a set of adaptable sources plus the procedure an agent follows to fit them to
-you.
-
-## Start
-
-Give your agent this:
+It gives you a working model for four separate layers:
 
 ```text
-Read AGENTS.md in this repository and run the install for me.
+identity/       who the agent is and how it communicates
+work-policy/    act/ask, scope, verification, and privacy rules
+skills/         conditional workflows with their own contracts and scripts
+context/        your private people, projects, customers, and decisions
 ```
 
-That is the whole entry point. The agent will:
+The separation is the point. Identity and policy are always on. Skills load
+only when their task matches. Context stays private and is loaded only when it
+is actually needed.
 
-1. **Detect** your runtime, your existing instructions, your repo, your test command.
-2. **Interview** you — one round, eight blocks, every one with a recommended default.
-3. **Write a profile** recording every decision, then show you the plan.
-4. **Install** the layers and the skills you picked, adapted to your language and stack.
-5. **Verify** it — file structure, skill routing, and one real task.
-6. **Report** what exists, what it proved, and what it deliberately left out.
+## Start Here
 
-Twenty minutes if you engage with the questions. Five if you say "defaults are
-fine".
-
-## Share Or Update
-
-The public Starter is [sebastian-breitzke/stellwerk-starter](https://github.com/sebastian-breitzke/stellwerk-starter).
-It is safe to share because it contains adaptable runtime design, not personal
-context, session history, secrets, or customer material.
-
-To keep a local checkout current:
+Get a local Starter checkout, then create an empty folder for your own runtime
+repository:
 
 ```bash
 git clone https://github.com/sebastian-breitzke/stellwerk-starter.git
-cd stellwerk-starter
-git pull --ff-only
+mkdir my-skill-library
+cd my-skill-library
 ```
 
-Point an agent at that checkout and use the Start instruction above. Do not copy
-the files unchanged into an existing runtime: let the installer adapt them to
-the user's runtime, language, repositories, and privacy boundary.
-
-## What You Get
+Start a new Claude, Codex, or equivalent agent session in that empty folder and
+point it at the Starter checkout with this prompt:
 
 ```text
-identity/        role, tone, non-negotiables            always loaded, ~40 lines
-work-policy/     act/ask, verification, coding, routing  always loaded, ~120 lines
-skills/          full procedures                         loaded when relevant
-context/         people, projects, customers             loaded on demand
+I want to build my own agent skill library in this repository.
+Read <path-to-stellwerk-starter>/AGENTS.md, then follow
+<path-to-stellwerk-starter>/onboarding/BUILD-YOUR-SKILL-LIBRARY.md.
+Treat the Starter as source material. Build and explain my own source
+repository, deployment path, and initial skill set. Do not copy private
+context from the Starter.
 ```
 
-The always-on layer is a routing table, not a manual. Everything a competent
-agent needs only sometimes lives in a skill. That separation is the entire idea
-— and flattening it back into one long prompt is the failure this repo exists to
-prevent.
+The agent will inspect the empty repository and your local runtime, ask one
+focused round of questions, propose the exact files it will create, and then
+build and verify the result. It stops before writing outside the chosen
+repository or before any other meaningful external action.
 
-## The Core Workflow
+For the full agent workflow, read
+[Build your Skill Library](onboarding/BUILD-YOUR-SKILL-LIBRARY.md).
 
-`leitstand` — a German word for a control room — is a session mode for work too
-big to hold in one turn. Long dictations, multi-component changes, anything that
-will still be running after your context window is compacted.
+## What You Are Getting
 
-```mermaid
-flowchart LR
-    A[Intake<br/>raw input preserved] --> B[Challenge<br/>one hard question]
-    B --> C[Plan<br/>scope + verification]
-    C --> D[Delegate<br/>bounded workers]
-    D --> E[Verify<br/>evidence, not claims]
-    E --> F[Close<br/>or explicitly narrow]
-    E -. gaps found .-> C
+You are getting portable, working source material and a way to make it yours.
+You are not getting another person's identity, private context, secrets, or
+machine paths.
 
-    subgraph store[Session store]
-        L[session.jsonl<br/>append-only audit trail]
-        S[state.md<br/>compact current state]
-    end
+| Part | What it gives you | What you make your own |
+|---|---|---|
+| Identity templates | Role, tone, and non-negotiables | Your voice and working relationship |
+| Work policy | Safe act/ask boundary, verification, scope, privacy | Your authority, repositories, and quality bar |
+| Skill packages | Complete task workflows, including references and scripts | The packages you select and any domain-specific extensions |
+| Deployment model | One source repository with runtime-specific assembly | Your target runtimes and deploy script |
+| Context boundary | A clear place for private knowledge | Your people, projects, customers, and decisions |
 
-    A -.-> L
-    D -.-> L
-    E -.-> S
-```
+## Skill Packages
 
-The two artifacts do different jobs. The JSONL log is the audit trail —
-append-only, your original words stored verbatim before anything summarizes
-them. The state file is working memory: the compact current state a fresh chat,
-a resumed session, or a worker reads *instead of* replaying the conversation.
-That split is what makes a session survive context compaction.
+Start small. A sharp library with three skills that route reliably beats a
+folder of twenty that never fire.
 
-```mermaid
-flowchart TD
-    U[You<br/>direction + corrections] --> M[Main agent<br/>owns the session]
-    M --> S1[Worker<br/>bounded scope]
-    M --> S2[Worker<br/>bounded scope]
-    S1 -- compact result --> M
-    S2 -- compact result --> M
-    M -- reviewed + verified outcome --> U
-```
+| Package | Use it for | Why it is separate |
+|---|---|---|
+| Operating core | `leitstand`, `ax-review`, `bro`, `smb-pragmatism` | Durable work, agent experience, and clear operating decisions |
+| Development | `dev-challenge`, `dev-implement`, `dev-discipline`, `dev-review`, `dev-code-review`, `dev-domain-language`, `dev-ui`, `dev-github-pr`, `dev-change-notes` | Planning, implementation, proof, review, UI, language, and PR work are different jobs |
+| Writing and prompt design | `functional-writing`, `prompt-creation-review`, `unslop`, `tone-of-voice` | Durable human prose and model-facing contracts need different quality gates |
+| Research and media | `brave-search`, `research`, `transcription`, `youtube-research` | Retrieval, synthesis, transcription, and video analysis have different prerequisites and evidence rules |
+| Collaboration | `meeting-recap` | Shareable meeting facts stay separate from private working notes |
+| Local setup | `secret-resolution` | Credentials stay in a local secret manager, never in prompts or repositories |
 
-Workers produce inputs. They never own the goal, never lower the quality bar,
-and never replace final review. The rule that makes it work: the agent does not
-hand coordination back to you for work that belongs inside the session.
+The complete package map and each skill's purpose live in
+[skills/README.md](skills/README.md).
 
-## Good Fit / Bad Fit
+## Build a Source Repository, Not a Pile of Copies
 
-**Good fit** if you already use coding agents daily, your longer tasks drift
-across many turns, you want the agent to coordinate its own subagents, and you
-would rather adapt ideas than adopt someone else's private setup.
+Your own repository becomes the source of truth. The Starter is the reference
+you selectively import from.
 
-**Bad fit** if you only need one short prompt, your runtime cannot load anything
-conditionally, you want a prebuilt package, or you are not willing to read the
-instructions before running them. That last one matters: this material tells an
-agent how to act on your machine.
+Keep that source repository private by default. If you later share it, private
+context belongs outside the repository or in ignored local files — a folder
+named `context/` does not create a privacy boundary by itself.
 
-## Map
+The agent will guide you through this sequence:
 
-Agent-facing, in read order:
+1. Detect the runtime, existing instructions, repository state, and available
+   local secret manager.
+2. Create or confirm your own Git repository and its source layout.
+3. Choose a small initial package set and copy complete skill directories — not
+   only `SKILL.md`, but also their `references/`, `scripts/`, `agents/`, and
+   `evals/` when present.
+4. Write your private identity and policy. Do not import anyone else's.
+5. Create a deploy script when you use more than one runtime. It assembles the
+   selected source layers into each runtime's native location.
+6. Configure secret routing, verify the runtime, and run one small real task.
 
-- [AGENTS.md](AGENTS.md) — the install contract
-- [install/procedure.md](install/procedure.md) — six phases
-- [install/runtimes.md](install/runtimes.md) — where files go, per runtime
-- [install/interview.md](install/interview.md) — the questions
-- [install/profile.md](install/profile.md) — the decision record
-- [install/verify.md](install/verify.md) — the three checks
+Do not hand-maintain copies in several runtime folders. One source repository
+plus a small deploy script is the canonical path once you use more than one
+runtime.
 
-Sources to adapt:
+## Secrets Stay Local
 
-- [identity/role-and-tone.md](identity/role-and-tone.md)
-- [work-policy/](work-policy/) — execution, verification, coding, routing, privacy
-- [skills/README.md](skills/README.md) — **read this before writing any skill**
-- [skills/leitstand/](skills/leitstand/) — the worked example: references, scripts, evals
-- canonical Core skills: `dev-challenge`, `dev-implement`, `dev-discipline`,
-  `dev-review`, `dev-code-review`, `dev-domain-language`, `dev-ui`,
-  `dev-github-pr`, `dev-change-notes`, `prompt-creation-review`,
-  `functional-writing`, `ax-review`, `smb-pragmatism`, and `unslop`
-- portable user setup: `leitstand`, `tone-of-voice`, `secret-resolution`,
-  `brave-search`, `research`, `transcription`, `youtube-research`, and
-  `meeting-recap`
+Skills can name a credential they need. They must never ask you to paste its
+value into chat or store it in a repository.
 
-Background:
+We recommend [hort](https://github.com/sebastian-breitzke/hort) as a local
+secret and configuration manager. Install and configure it before enabling a
+skill that needs a key, such as Brave Search or OpenRouter transcription. The
+agent should use your approved local secret manager and retain only entry names,
+never values.
 
-- [architecture.md](architecture.md) — why the layers exist and where a line goes
-- [privacy-and-sharing.md](privacy-and-sharing.md) — what must never leave your machine
+## Before You Share Anything
 
-## What Not To Import
+The method is public. Your operating context is not.
 
-Never take another person's biography, stakeholder library, customer names,
-company workflows, infrastructure paths, secrets, vault keys, bot handles,
-hostnames, meeting transcripts, or session logs. None of it is reusable runtime
-design; all of it is somebody's private operating context.
+Never publish personal profiles, stakeholder notes, customer data, local paths,
+hostnames, transcripts, session logs, token names, or secret values. Read
+[privacy-and-sharing.md](privacy-and-sharing.md) before sharing your own
+library.
 
-This repo contains none of it, deliberately. Keep it that way in yours.
+## Deeper Reference
 
-## If You Would Rather Do It By Hand
-
-1. Write a concise identity and work policy. Keep both short.
-2. Add `leitstand` for orchestration.
-3. Add `dev-discipline` for testing, debugging, and proof-before-done.
-4. Add whichever third skill matches your actual week.
-5. Run a real task through it.
-6. Adjust from evidence, not from imagined future needs.
-
-Three skills that fire reliably beat eleven that sit on disk.
+- [Agent entry point](AGENTS.md) — the instruction an agent follows
+- [Build your Skill Library](onboarding/BUILD-YOUR-SKILL-LIBRARY.md) — the
+  step-by-step agent workflow
+- [Architecture](architecture.md) — why the layers stay separate
+- [Skill packages](skills/README.md) — what each package does
+- [Runtime placement](install/runtimes.md) — likely locations per agent runtime
